@@ -1,0 +1,28 @@
+// Schema for storing sessions and responses from AI models
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Session {
+  id        String    @id @default(cuid())
+  prompt    String
+  createdAt DateTime  @default(now())
+  responses Response[]
+}
+
+model Response {
+  id         String   @id @default(cuid())
+  sessionId  String
+  modelName  String
+  content    String?
+  status     String   @default("pending")
+  createdAt  DateTime @default(now())
+  Session    Session  @relation(fields: [sessionId], references: [id])
+
+  metrics    Json?
+}

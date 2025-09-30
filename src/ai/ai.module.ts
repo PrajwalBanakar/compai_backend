@@ -1,0 +1,10 @@
+/* eslint-disable prettier/prettier */
+// src/ai/ai.module.ts
+import { Module } from '@nestjs/common';
+import { AIService } from './ai.service';
+
+@Module({
+  providers: [AIService],
+  exports: [AIService],
+})
+export class AiModule {}
